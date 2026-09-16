@@ -69,10 +69,23 @@
                 Your remaining todos : {{ $todos->where('status', false)->count() }}
             </p>
             <p class="italic text-gray-400 mt-2 text-sm">
-                "When life gives you lemon." - Wayne Dyer
+                {{-- "When life gives you lemon." - Elbert Hubbard --}}
+                @php
+                    $random_quotes = [
+                        '"When life gives you lemon." - Elbert Hubbard',
+                        '"It\'s La Peace" - Kai Cenat',
+                        '"Cuman sawit tiada yang lain" - otnaibuS owobarP',
+                        '"Sun Tzu The Art of War" - Sun Tzu',
+                        '"Say Walahi Bro" - IShowSpeed'
+                    ];
+                @endphp
+                {{ $random_quotes[array_rand($random_quotes)]; }}
             </p>
         </div>
     </div>
 
+    <p class="fixed text-[14px] text-gray-600 bottom-1 left-1">
+        Codesome & Gemini - 2026
+    </p>
 </body>
 </html>
