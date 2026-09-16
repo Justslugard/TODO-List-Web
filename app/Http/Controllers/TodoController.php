@@ -83,4 +83,18 @@ class TodoController extends Controller
         
         return redirect()->back();
     }
+
+    public function switchTheme(string $theme)
+    {
+        // 1. Define the themes you are building
+        $allowedThemes = ['default', 'ultrakill', 'terraria', 'miside'];
+        
+        // 2. Only save it to the session if it's a valid theme
+        if (in_array($theme, $allowedThemes)) {
+            session(['theme' => $theme]);
+        }
+
+        // 3. Refresh the page
+        return redirect()->back();
+    }
 }
