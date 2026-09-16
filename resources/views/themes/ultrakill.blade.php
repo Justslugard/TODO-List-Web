@@ -7,7 +7,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <style>
-        /* B&W Terminal Scrollbar */
+/* B&W Terminal Scrollbar */
         .ultra-scroll::-webkit-scrollbar {
             width: 8px;
         }
@@ -26,6 +26,29 @@
         .clip-octagon {
             clip-path: polygon(25px 0, 100% 0, 100% calc(100% - 25px), calc(100% - 25px) 100%, 0 100%, 0 25px);
         }
+
+        /* Base state & Closing Animation (Top down) */
+        .theme-btn {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.3s ease-out;
+        }
+        
+        /* Closing delays: Miside (top) disappears first, then Default, then Terraria */
+        .theme-btn:nth-child(1) { transition-delay: 0.0s; }
+        .theme-btn:nth-child(2) { transition-delay: 0.1s; }
+        .theme-btn:nth-child(3) { transition-delay: 0.2s; }
+
+        /* Open state (Bottom up) */
+        #theme-menu.menu-open .theme-btn {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Opening delays: Terraria (bottom) appears first, then Default, then Miside */
+        #theme-menu.menu-open .theme-btn:nth-child(3) { transition-delay: 0.0s; }
+        #theme-menu.menu-open .theme-btn:nth-child(2) { transition-delay: 0.1s; }
+        #theme-menu.menu-open .theme-btn:nth-child(1) { transition-delay: 0.2s; }
     </style>
 </head>
 <body class="min-h-screen flex items-center justify-start pl-8 lg:pl-32 p-4 font-['VCR'] overflow-hidden text-white text-xl tracking-wider uppercase">
@@ -41,7 +64,7 @@
     </audio>
 
     <!-- Audio Toggle Button -->
-    <button onclick="toggleAudio()" id="audio-btn" class="fixed top-6 right-8 border-2 border-white bg-black px-4 py-2 hover:bg-white hover:text-black transition-colors z-50 cursor-pointer">
+    <button onclick="toggleAudio()" id="audio-btn" class="fixed top-6 right-5 border-2 border-white bg-black px-4 py-2 hover:bg-white hover:text-black transition-colors z-50 cursor-pointer">
         AUDIO : OFF
     </button>
 
@@ -120,18 +143,19 @@
     </div>
 
     <!-- Fall-up Menu Theme Switcher -->
-    <div class="fixed bottom-6 right-8 z-50 flex flex-col items-end">
-        <div id="theme-menu" class="mb-4 flex flex-col items-end gap-4 transition-all duration-300 origin-bottom scale-90 opacity-0 pointer-events-none">
+    <div class="fixed bottom-6 right-5 z-50 flex flex-col items-end">
+        <!-- Removed Tailwind transitions, keeping pointer-events-none as default -->
+        <div id="theme-menu" class="mb-4 flex flex-col items-end gap-4 pointer-events-none">
             
-            <a href="{{ route('theme.switch', 'miside') }}" class="w-28 h-10 border-2 border-white bg-black hover:bg-white hover:text-black transition-colors flex items-center justify-center text-sm cursor-pointer">
+            <a href="{{ route('theme.switch', 'miside') }}" class="theme-btn w-28 h-10 border-2 border-white bg-black hover:bg-white hover:text-black transition-colors flex items-center justify-center text-sm cursor-pointer">
                 MISIDE
             </a>
             
-            <a href="{{ route('theme.switch', 'default') }}" class="w-28 h-10 border-2 border-white bg-black hover:bg-white hover:text-black transition-colors flex items-center justify-center text-sm cursor-pointer">
+            <a href="{{ route('theme.switch', 'default') }}" class="theme-btn w-28 h-10 border-2 border-white bg-black hover:bg-white hover:text-black transition-colors flex items-center justify-center text-sm cursor-pointer">
                 DEFAULT
             </a>
             
-            <a href="{{ route('theme.switch', 'terraria') }}" class="w-28 h-10 border-2 border-white bg-black hover:bg-white hover:text-black transition-colors flex items-center justify-center text-sm cursor-pointer">
+            <a href="{{ route('theme.switch', 'terraria') }}" class="theme-btn w-28 h-10 border-2 border-white bg-black hover:bg-white hover:text-black transition-colors flex items-center justify-center text-sm cursor-pointer">
                 TERRARIA
             </a>
             
@@ -149,10 +173,7 @@
     <script>
         function toggleThemeMenu() {
             const menu = document.getElementById('theme-menu');
-            menu.classList.toggle('scale-90');
-            menu.classList.toggle('scale-100');
-            menu.classList.toggle('opacity-0');
-            menu.classList.toggle('opacity-100');
+            menu.classList.toggle('menu-open');
             menu.classList.toggle('pointer-events-none');
         }
 
