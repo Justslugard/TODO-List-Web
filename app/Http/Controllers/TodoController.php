@@ -24,7 +24,7 @@ class TodoController extends Controller
      */
     public function create()
     {
-        //
+        return view("create_todo");
     }
 
     /**
@@ -33,15 +33,18 @@ class TodoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "title" => "required|string|max:255"
+            "title" => "required|string|min:3|max:255"
+        ], [
+            "title.required" => "Task can't be empty!",
+            "title.min" => "Task must be more than 3 characters!",
+            "title.max" => "Task can't be more than 255 characters!"
         ]);
 
         Todo::create([
-            "title" => $request->title,
-            "status" => false
+            "title" => $request->title
         ]);
 
-        return redirect()->back();
+        return redirect("/");
     }
 
     /**
@@ -67,7 +70,6 @@ class TodoController extends Controller
     {
         $todo = Todo::findOrFail($id);
         
-        // Flip the boolean status (if true make it false, if false make it true)
         $todo->status = !$todo->status;
         $todo->save();
 
