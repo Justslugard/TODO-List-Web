@@ -6,3 +6,10 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: "Terr";
+    src: url("/public/fonts/Terraria.TTF") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}

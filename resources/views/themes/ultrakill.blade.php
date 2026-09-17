@@ -7,7 +7,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <style>
-/* B&W Terminal Scrollbar */
+        /* B&W Terminal Scrollbar */
         .ultra-scroll::-webkit-scrollbar {
             width: 8px;
         }
